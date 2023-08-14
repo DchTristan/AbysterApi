@@ -36,6 +36,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
         };
     });
+
+
 builder.Services.AddDbContext<AbysterDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("AbysterConnectionString")));
 

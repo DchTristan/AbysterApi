@@ -18,8 +18,8 @@ namespace AbysterApi.Controllers
             _context = context;
         }
 
-        [HttpPost("create")] // Ajoutez l'attribut Authorize avec les rôles appropriés
-        public async Task<ActionResult> CreateCategorie(CategorieDto categorieDto)
+        [HttpPost("create"), Authorize]
+        public async Task<ActionResult<int>> CreateCategorie(CategorieDto categorieDto)
         {
             var categorie = new Categorie
             {
@@ -31,7 +31,8 @@ namespace AbysterApi.Controllers
             _context.Categories.Add(categorie);
             await _context.SaveChangesAsync();
 
-            return Ok("Catégorie créée avec succès");
+            return Ok(categorie.Id);
         }
+
     }
 }

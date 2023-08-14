@@ -10,40 +10,39 @@ namespace AbysterApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RevenuController : ControllerBase
+    public class DepenseController : ControllerBase
     {
         private readonly AbysterDbContext _context;
 
-        public RevenuController(AbysterDbContext context)
+        public DepenseController(AbysterDbContext context)
         {
             _context = context;
         }
 
-
         [HttpPost("declare"), Authorize]
-        public async Task<ActionResult> DeclareRevenu([FromBody] RevenuDto revenuDto, [FromQuery] int categorieId)
+        public async Task<IActionResult> DeclareDepense([FromBody] DepenseDto depenseDto, [FromQuery] int categorieId)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var utilisateur = await _context.Personnes.FindAsync(userId);
             var categorie = await _context.Categories.FindAsync(categorieId);
 
-            if (utilisateur == null || categorie == null)
+            if((utilisateur == null) || (categorie == null))
             {
-                return BadRequest("Utilisateur ou Categorie non trouvés");
+                return NotFound("Utilisateur ou Categorie non trouvés");
             }
 
-            var revenu = new Operation
+            var depense = new Operation
             {
-                Montant = revenuDto.Montant,
+                Montant = depenseDto.Montant,
                 PersonneId = utilisateur.Id,
-                CategorieId = categorie.Id
+                CategorieId = categorieId
             };
 
-            _context.Operations.Add(revenu);
+            _context.Operations.Add(depense);
             await _context.SaveChangesAsync();
 
-            return Ok("Revenu declaré avec succès");
+            return Ok("Depense enregistrée avec succès");
         }
 
         [HttpGet("operations-recentes"), Authorize]
@@ -59,9 +58,5 @@ namespace AbysterApi.Controllers
 
             return Ok(operations);
         }
-
-
-
     }
-
 }

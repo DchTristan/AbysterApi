@@ -6,6 +6,7 @@ namespace AbysterApi.Models
     public class Operation
     {
         public int Id { get; set; }
+        public DateTime DateOperation { get; set; }
 
 
         [Column(TypeName = "decimal(18,2)")]
