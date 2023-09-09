@@ -42,7 +42,7 @@ namespace AbysterApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("AbysterApi.Models.Operation", b =>
@@ -71,7 +71,7 @@ namespace AbysterApi.Migrations
 
                     b.HasIndex("PersonneId");
 
-                    b.ToTable("Operations");
+                    b.ToTable("Operations", (string)null);
                 });
 
             modelBuilder.Entity("AbysterApi.Models.Personne", b =>
@@ -114,7 +114,7 @@ namespace AbysterApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Personnes");
+                    b.ToTable("Personnes", (string)null);
                 });
 
             modelBuilder.Entity("AbysterApi.Models.Operation", b =>

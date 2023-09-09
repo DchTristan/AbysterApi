@@ -36,7 +36,10 @@ namespace AbysterApi.Controllers
             {
                 Montant = depenseDto.Montant,
                 PersonneId = utilisateur.Id,
-                CategorieId = categorieId
+                CategorieId = categorieId,
+                DateOperation = DateTime.Now
+
+
             };
 
             _context.Operations.Add(depense);
@@ -48,8 +51,7 @@ namespace AbysterApi.Controllers
         [HttpGet("operations-recentes"), Authorize]
         public async Task<ActionResult<List<Operation>>> GetRecentOperations()
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
+             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);         
             DateTime troisMoisAvant = DateTime.Now.AddMonths(-3);
 
             var operations = await _context.Operations
